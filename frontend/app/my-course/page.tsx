@@ -4,6 +4,7 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import CourseCard from "@/components/course-card";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function MyCoursePage() {
   const [filter, setFilter] = useState("active");
@@ -70,17 +71,20 @@ export default function MyCoursePage() {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
           {filtered.length > 0 ? (
             filtered.map((course) => (
-              <CourseCard
-                key={course.id}
-                type="enrolled"
-                category={course.category}
-                title={course.title}
-                level={course.level}
-                chaptersCount={course.chaptersCount}
-                videosCount={course.videosCount}
-                progressText={course.progressText}
-                progressPercentage={course.progressPercentage}
-              />
+              <Link key={course.id} href={`/courses/${course.id}`}>
+                <div className="h-full cursor-pointer hover:-translate-y-1 transition-transform">
+                  <CourseCard
+                    type="enrolled"
+                    category={course.category}
+                    title={course.title}
+                    level={course.level}
+                    chaptersCount={course.chaptersCount}
+                    videosCount={course.videosCount}
+                    progressText={course.progressText}
+                    progressPercentage={course.progressPercentage}
+                  />
+                </div>
+              </Link>
             ))
           ) : (
             <p className="text-xs font-semibold text-slate-400">Tidak ada modul kriteria ini.</p>

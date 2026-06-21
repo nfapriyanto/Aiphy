@@ -6,6 +6,7 @@ import DashboardBanner from "@/components/dashboard-banner";
 import StreakCard from "@/components/streak-card";
 import CourseCard from "@/components/course-card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export default function DashboardPage() {
   const enrolledCourses = [
@@ -129,17 +130,20 @@ export default function DashboardPage() {
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {enrolledCourses.map((course) => (
-              <CourseCard
-                key={course.id}
-                type="enrolled"
-                category={course.category}
-                title={course.title}
-                level={course.level}
-                chaptersCount={course.chaptersCount}
-                videosCount={course.videosCount}
-                progressText={course.progressText}
-                progressPercentage={course.progressPercentage}
-              />
+              <Link key={course.id} href={`/courses/${course.id}`}>
+                <div className="h-full cursor-pointer hover:-translate-y-1 transition-transform">
+                  <CourseCard
+                    type="enrolled"
+                    category={course.category}
+                    title={course.title}
+                    level={course.level}
+                    chaptersCount={course.chaptersCount}
+                    videosCount={course.videosCount}
+                    progressText={course.progressText}
+                    progressPercentage={course.progressPercentage}
+                  />
+                </div>
+              </Link>
             ))}
           </div>
 
@@ -170,19 +174,22 @@ export default function DashboardPage() {
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {recommendedCourses.map((course) => (
-              <CourseCard
-                key={course.id}
-                type="recommendation"
-                category={course.category}
-                title={course.title}
-                level={course.level}
-                chaptersCount={course.chaptersCount}
-                rating={course.rating}
-                enrolledStudentsCount={course.enrolledStudentsCount}
-                duration={course.duration}
-                price={course.price}
-                originalPrice={course.originalPrice}
-              />
+              <Link key={course.id} href={`/courses/${course.id}`}>
+                <div className="h-full cursor-pointer hover:-translate-y-1 transition-transform">
+                  <CourseCard
+                    type="recommendation"
+                    category={course.category}
+                    title={course.title}
+                    level={course.level}
+                    chaptersCount={course.chaptersCount}
+                    rating={course.rating}
+                    enrolledStudentsCount={course.enrolledStudentsCount}
+                    duration={course.duration}
+                    price={course.price}
+                    originalPrice={course.originalPrice}
+                  />
+                </div>
+              </Link>
             ))}
           </div>
 

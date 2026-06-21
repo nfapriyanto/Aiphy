@@ -46,7 +46,7 @@ export default function DashboardBanner() {
         </div>
 
         {/* Banner Footer Actions */}
-        <div className="flex flex-wrap items-center gap-4 border-t border-slate-800 pt-5">
+        <div className="flex flex-wrap items-center max-w-md gap-4 border-t border-slate-800 pt-5">
           {/* Next Goal */}
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-800 border border-slate-700 text-indigo-400">
