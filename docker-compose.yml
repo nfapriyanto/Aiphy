@@ -1,0 +1,42 @@
+services:
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: aiphy-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://aiphy_user:aiphy_password@db:5432/aiphy_db
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - db
+      - redis
+    restart: always
+
+  db:
+    image: postgres:15-alpine
+    container_name: aiphy-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=aiphy_user
+      - POSTGRES_PASSWORD=aiphy_password
+      - POSTGRES_DB=aiphy_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    container_name: aiphy-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: always
+
+volumes:
+  postgres_data:
+  redis_data:
