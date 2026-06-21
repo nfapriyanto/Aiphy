@@ -9,30 +9,56 @@ import {
   MessageSquare, 
   HelpCircle, 
   Settings,
-  Sparkles
+  Sparkles,
+  Shield
 } from "lucide-react";
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const isAdmin = pathname.startsWith("/admin");
 
-  const menuItems = [
-    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { name: "My Course", href: "/my-course", icon: GraduationCap },
-    { name: "All Courses", href: "/all-courses", icon: BookOpen },
-    { name: "AI Chat", href: "/ai-chat", icon: MessageSquare },
-  ];
+  const menuItems = isAdmin
+    ? [
+        { name: "Admin Console", href: "/admin", icon: LayoutDashboard },
+      ]
+    : [
+        { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+        { name: "My Course", href: "/my-course", icon: GraduationCap },
+        { name: "All Courses", href: "/all-courses", icon: BookOpen },
+        { name: "AI Chat", href: "/ai-chat", icon: MessageSquare },
+      ];
 
-  const bottomItems = [
-    { name: "Help", href: "/help", icon: HelpCircle },
-    { name: "Settings", href: "/settings", icon: Settings },
-  ];
+  const bottomItems = isAdmin
+    ? [
+        { name: "View as Learner", href: "/dashboard", icon: BookOpen },
+        { name: "Settings", href: "/settings", icon: Settings },
+      ]
+    : [
+        { name: "Help", href: "/help", icon: HelpCircle },
+        { name: "Settings", href: "/settings", icon: Settings },
+      ];
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-20 flex w-20 flex-col items-center justify-between border-r border-indigo-900/10 bg-[#1E216B] py-6 text-white shadow-xl">
+    <aside className={`fixed inset-y-0 left-0 z-20 flex w-20 flex-col items-center justify-between border-r py-6 text-white shadow-xl transition-all duration-300 ${
+      isAdmin 
+        ? "border-red-950/20 bg-slate-900" 
+        : "border-indigo-900/10 bg-[#1E216B]"
+    }`}>
       {/* Brand Logo */}
       <div className="flex flex-col items-center gap-2">
-        <Link href="/" className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-500/20 text-white hover:bg-indigo-500/30 transition-all duration-200">
-          <Sparkles className="h-6 w-6 text-indigo-300 animate-pulse" />
+        <Link 
+          href={isAdmin ? "/admin" : "/"} 
+          className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-all duration-200 ${
+            isAdmin 
+              ? "bg-red-500/20 text-red-300 hover:bg-red-500/30" 
+              : "bg-indigo-500/20 text-white hover:bg-indigo-500/30"
+          }`}
+        >
+          {isAdmin ? (
+            <Shield className="h-6 w-6 text-red-400 animate-pulse" />
+          ) : (
+            <Sparkles className="h-6 w-6 text-indigo-300 animate-pulse" />
+          )}
         </Link>
       </div>
 
@@ -48,13 +74,17 @@ export default function Sidebar() {
               title={item.name}
               className={`relative flex h-12 w-12 mx-auto items-center justify-center rounded-xl transition-all duration-300 ${
                 isActive
-                  ? "bg-indigo-600/90 text-white shadow-md shadow-indigo-600/30 scale-105"
+                  ? isAdmin
+                    ? "bg-red-600/90 text-white shadow-md shadow-red-600/30 scale-105"
+                    : "bg-indigo-600/90 text-white shadow-md shadow-indigo-600/30 scale-105"
                   : "text-indigo-200/70 hover:bg-white/10 hover:text-white"
               }`}
             >
               <Icon className="h-5.5 w-5.5" />
               {isActive && (
-                <span className="absolute left-0 top-3 h-6 w-1 rounded-r bg-indigo-300" />
+                <span className={`absolute left-0 top-3 h-6 w-1 rounded-r ${
+                  isAdmin ? "bg-red-400" : "bg-indigo-300"
+                }`} />
               )}
             </Link>
           );
@@ -74,7 +104,9 @@ export default function Sidebar() {
               title={item.name}
               className={`flex h-12 w-12 mx-auto items-center justify-center rounded-xl transition-all duration-300 ${
                 isActive
-                  ? "bg-indigo-600/90 text-white"
+                  ? isAdmin
+                    ? "bg-red-600/90 text-white"
+                    : "bg-indigo-600/90 text-white"
                   : "text-indigo-200/70 hover:bg-white/10 hover:text-white"
               }`}
             >
