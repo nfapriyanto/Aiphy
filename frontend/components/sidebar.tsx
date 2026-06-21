@@ -10,7 +10,8 @@ import {
   HelpCircle, 
   Settings,
   Sparkles,
-  Shield
+  Shield,
+  Users
 } from "lucide-react";
 
 export default function Sidebar() {
@@ -19,7 +20,10 @@ export default function Sidebar() {
 
   const menuItems = isAdmin
     ? [
-        { name: "Admin Console", href: "/admin", icon: LayoutDashboard },
+        { name: "Admin Dashboard", href: "/admin", icon: LayoutDashboard },
+        { name: "Curriculum CMS", href: "/admin/courses", icon: BookOpen },
+        { name: "User Management", href: "/admin/users", icon: Users },
+        { name: "AI Settings", href: "/admin/settings", icon: Settings },
       ]
     : [
         { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -30,8 +34,7 @@ export default function Sidebar() {
 
   const bottomItems = isAdmin
     ? [
-        { name: "View as Learner", href: "/dashboard", icon: BookOpen },
-        { name: "Settings", href: "/settings", icon: Settings },
+        { name: "View as Learner", href: "/dashboard", icon: GraduationCap },
       ]
     : [
         { name: "Help", href: "/help", icon: HelpCircle },
